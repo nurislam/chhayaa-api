@@ -1,0 +1,40 @@
+# Check out https://hub.docker.com/_/node to select a new base image
+FROM node:18.12
+
+# Set to a non-root built-in user `nodeuser`
+ARG USER=nodeuser
+ARG PASS=8pz0yO^OI$80ZOR#Mz^8g%dL
+RUN useradd -m -s /bin/bash $USER && echo "$USER:$PASS" | chpasswd
+USER nodeuser
+
+# Create app directory (with user `nodeuser`)
+RUN mkdir -p /home/nodeuser/clientmanagerserver
+
+WORKDIR /home/nodeuser/clientmanagerserver
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY --chown=nodeuser package*.json ./
+COPY --chown=nodeuser ./patches ./patches
+
+RUN npm install
+
+# configure environment
+COPY --chown=nodeuser ./.env ./env.template
+COPY --chown=nodeuser ./docker.init.sh ./docker.init.sh
+RUN chmod +x ./docker.init.sh
+ENTRYPOINT ["./docker.init.sh"]
+
+# Bundle app source code
+COPY --chown=nodeuser ./tsconfig.* ./
+COPY --chown=nodeuser ./tsdef ./tsdef
+COPY --chown=nodeuser ./public ./public
+COPY --chown=nodeuser ./reportassets ./reportassets
+COPY --chown=nodeuser ./spec ./spec
+
+# Bind to all network interfaces so that it can be mapped to the host OS
+ENV HOST=0.0.0.0 PORT=3001
+
+EXPOSE ${PORT}
+CMD [ "npm", "start" ]

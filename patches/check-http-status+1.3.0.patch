@@ -1,0 +1,29 @@
+diff --git a/node_modules/check-http-status/index.js b/node_modules/check-http-status/index.js
+index 6aab47d..965ff14 100644
+--- a/node_modules/check-http-status/index.js
++++ b/node_modules/check-http-status/index.js
+@@ -74,6 +74,7 @@ async function checkHttpStatus(config) {
+ 	// Add empty line
+ 	console.log();
+ 	console.log('\x1b[32m%s\x1b[0m', 'HTTP Status check completed!');
++	return httpStatusList;
+ }
+ 
+ module.exports = checkHttpStatus;
+diff --git a/node_modules/check-http-status/lib/http-list.js b/node_modules/check-http-status/lib/http-list.js
+index 80143c5..1db66ed 100644
+--- a/node_modules/check-http-status/lib/http-list.js
++++ b/node_modules/check-http-status/lib/http-list.js
+@@ -9,9 +9,9 @@ const checkStatusCode = require('./check-status-code');
+  * @param int totalList Total URL(s) needs to be processed.
+  */
+ function printProgress(progressList, totalList) {
+-	process.stdout.clearLine();
+-	process.stdout.cursorTo(0);
+-	process.stdout.write('Processing ' + progressList + ' of ' + totalList + ' ...	');
++	//process.stdout.clearLine();
++	//process.stdout.cursorTo(0);
++	//process.stdout.write('Processing ' + progressList + ' of ' + totalList + ' ...	');
+ }
+ 
+ /**

@@ -1,0 +1,17 @@
+#version: '3.8'
+
+services:
+  app:
+    build: .
+    #ports:
+    # - "4050:3000"
+    environment:
+      - NODE_ENV=Staging
+    networks:
+      - shared_network
+    restart: unless-stopped
+
+networks:
+  shared_network :
+    name: shared_network
+    external: true

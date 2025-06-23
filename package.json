@@ -1,0 +1,88 @@
+{
+  "name": "chhayaa-api",
+  "version": "0.0.1",
+  "description": "Chhayaa API",
+  "keywords": [
+    "cms-application",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "16 || 18 || 20"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "posttest": "npm run lint",
+    "docker:build": "docker build -t loopback-template .",
+    "docker:run": "docker run -p 3000:3000 -d loopback-template",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "dnd <info@dropndot.com>",
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/authentication": "^10.1.5",
+    "@loopback/authentication-jwt": "^0.14.5",
+    "@loopback/boot": "^6.1.4",
+    "@loopback/core": "^5.1.4",
+    "@loopback/repository": "^6.1.5",
+    "@loopback/rest": "^13.1.4",
+    "@loopback/rest-explorer": "^6.1.4",
+    "@loopback/service-proxy": "^6.1.4",
+    "@types/bcryptjs": "^2.4.6",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "bull": "^4.12.2",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.0.2",
+    "loopback-connector-mysql": "^5.4.4",
+    "moment-timezone": "^0.5.46",
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^6.9.16",
+    "sharp": "^0.33.5",
+    "tslib": "^2.0.0",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@loopback/build": "^10.1.4",
+    "@loopback/eslint-config": "^14.0.5",
+    "@loopback/testlab": "^6.1.4",
+    "@types/bcrypt": "^5.0.2",
+    "@types/bull": "^4.10.0",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^16.18.68",
+    "@types/nodemailer": "^6.4.14",
+    "eslint": "^8.51.0",
+    "source-map-support": "^0.5.21",
+    "tsc-watch": "^6.0.4",
+    "typescript": "~5.2.2"
+  }
+}
