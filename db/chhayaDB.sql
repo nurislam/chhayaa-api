@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2025 at 06:44 PM
+-- Generation Time: Jul 01, 2025 at 09:11 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -318,7 +318,6 @@ INSERT INTO `permissions` (`id`, `groupId`, `moduleId`, `actions`, `createdAt`) 
 (10, 1, 2, 'add,view,edit,delete', '2025-02-28 18:26:40'),
 (12, 1, 3, 'add,view,edit,delete', '2025-03-18 12:25:29'),
 (13, 1, 7, 'view,add,edit,delete', '2025-03-19 16:16:58'),
-(15, 1, 8, 'view', '2025-03-20 09:24:43'),
 (16, 1, 9, 'view,edit,delete,add', '2025-03-20 09:25:10'),
 (17, 1, 6, '', '2025-03-20 09:25:36'),
 (18, 1, 4, 'view,add,edit,delete', '2025-03-20 09:25:56'),
@@ -576,7 +575,8 @@ INSERT INTO `refreshtoken` (`id`, `RefreshToken`, `userId`) VALUES
 (154, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImY5MjFjZmNmLTQyNDctNDNlYi04YzQxLWM5MjgxODk0MDcwYiIsImlhdCI6MTc0ODYwNzQ4NSwiZXhwIjoxNzQ4ODIzNDg1LCJpc3MiOiJsb29wYmFjazQifQ.bhbJwbc16qbPDAocm76t5JUpWMox2fvxFKcfo2VPlCU', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (155, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjRmMDkxYmQ3LTI0ODQtNDRjMS1hMzk4LWQ5Yzk4NDgxZmFiZCIsImlhdCI6MTc1MDkxMzc1OSwiZXhwIjoxNzUxMTI5NzU5LCJpc3MiOiJsb29wYmFjazQifQ.wQ_LuhGIchVYegegVVRX4aYKZQaPO6U8WOlmkqYWpfU', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (156, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjZjYjk3ODk2LTZkZDktNDZhMC05MmIyLTMxYjM5NjY2OWIxYSIsImlhdCI6MTc1MTAwMzM0OSwiZXhwIjoxNzUxMjE5MzQ5LCJpc3MiOiJsb29wYmFjazQifQ._tQuCL7gbiS8yWXxOEQoLV4nRHsZJ0aVrNHAFTkrOLY', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
-(157, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjU0ZjdlNzQwLTAwOWUtNGE4YS1hNTg0LTg4YWMwZjU4MjI5MiIsImlhdCI6MTc1MTI5ODAxMiwiZXhwIjoxNzUxNTE0MDEyLCJpc3MiOiJsb29wYmFjazQifQ.xVTDaEpU_IMBHUXfOm7TdMaaO0bA9A3hOQe0iLJ0sjw', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
+(157, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjU0ZjdlNzQwLTAwOWUtNGE4YS1hNTg0LTg4YWMwZjU4MjI5MiIsImlhdCI6MTc1MTI5ODAxMiwiZXhwIjoxNzUxNTE0MDEyLCJpc3MiOiJsb29wYmFjazQifQ.xVTDaEpU_IMBHUXfOm7TdMaaO0bA9A3hOQe0iLJ0sjw', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(158, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImViMzZlNGQ5LTg0MTEtNDZhNS1iNzMzLTQ3ZmQzMmQyOTczNCIsImlhdCI6MTc1MTM5NjQ4OSwiZXhwIjoxNzUxNjEyNDg5LCJpc3MiOiJsb29wYmFjazQifQ.X9oeppqZb0WWK2xGY6GziNKUwajA3buKT3wU-fek1o0', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
 
 -- --------------------------------------------------------
 
@@ -1019,7 +1019,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `refreshtoken`
 --
 ALTER TABLE `refreshtoken`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 
 --
 -- AUTO_INCREMENT for table `settings`
