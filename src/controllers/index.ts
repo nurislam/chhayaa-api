@@ -7,3 +7,4 @@ export * from './permission.controller';
 export * from './post.controller';
 export * from './user.controller';
 export * from './tag.controller';
+export * from './courses.controller';

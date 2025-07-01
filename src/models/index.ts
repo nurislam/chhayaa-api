@@ -9,3 +9,4 @@ export * from './post.model';
 export * from './tag.model';
 export * from './token.model';
 export * from './user.model';
+export * from './courses.model';

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 12, 2025 at 08:56 AM
--- Server version: 11.7.2-MariaDB
--- PHP Version: 8.1.32
+-- Host: 127.0.0.1
+-- Generation Time: Jul 01, 2025 at 06:44 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `chhayaDB`
+-- Database: `cms`
 --
 
 -- --------------------------------------------------------
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `accesstokens` (
   `id` varchar(336) NOT NULL,
-  `userId` uuid NOT NULL,
+  `userId` char(36) NOT NULL,
   `ipAddress` varchar(25) DEFAULT NULL,
   `deviceInfo` varchar(255) DEFAULT NULL,
   `isLoggedIn` tinyint(1) DEFAULT NULL,
@@ -129,6 +129,35 @@ INSERT INTO `company` (`id`, `name`, `address`, `imageUrl`, `createdAt`, `update
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `id` bigint(20) NOT NULL,
+  `categoryId` int(11) NOT NULL,
+  `instructorId` int(11) NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `price` varchar(5) NOT NULL,
+  `content` longtext DEFAULT NULL,
+  `duration` varchar(255) NOT NULL,
+  `language` varchar(255) NOT NULL DEFAULT 'English',
+  `certificate` varchar(10) NOT NULL DEFAULT 'yes',
+  `rating` varchar(100) NOT NULL,
+  `totalLesson` smallint(10) NOT NULL,
+  `TotalStudents` smallint(10) NOT NULL,
+  `featured` varchar(255) NOT NULL,
+  `imageUrl` varchar(255) NOT NULL,
+  `status` enum('pending','published','draft','deleted') NOT NULL DEFAULT 'pending',
+  `createdAt` datetime DEFAULT current_timestamp(),
+  `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdBy` varchar(255) NOT NULL,
+  `deleted` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `groups`
 --
 
@@ -154,11 +183,52 @@ INSERT INTO `groups` (`id`, `name`, `createdAt`, `createdBy`, `status`, `deleted
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `instructors`
+--
+
+CREATE TABLE `instructors` (
+  `id` bigint(20) NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` longtext DEFAULT NULL,
+  `rating` varchar(100) NOT NULL,
+  `TotalCourse` smallint(10) NOT NULL,
+  `featured` varchar(255) NOT NULL,
+  `imageUrl` varchar(255) NOT NULL,
+  `status` enum('pending','published','draft','deleted') NOT NULL DEFAULT 'pending',
+  `createdAt` datetime DEFAULT current_timestamp(),
+  `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdBy` varchar(255) NOT NULL,
+  `deleted` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lessons`
+--
+
+CREATE TABLE `lessons` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `details` text NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `courseId` int(11) NOT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `createdAt` timestamp NULL DEFAULT current_timestamp(),
+  `createdBy` varchar(255) NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `modules`
 --
 
 CREATE TABLE `modules` (
   `id` int(11) NOT NULL,
+  `parentId` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
@@ -173,16 +243,24 @@ CREATE TABLE `modules` (
 -- Dumping data for table `modules`
 --
 
-INSERT INTO `modules` (`id`, `name`, `slug`, `icon`, `ordering`, `createdAt`, `createdBy`, `status`, `deleted`) VALUES
-(1, 'users', '/admin/users', 'FaUserGroup', 7, '2025-02-28 15:44:44', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(2, 'pages', '/admin/pages', 'RiPagesFill', 3, '2025-02-28 17:46:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(3, 'permission', '/admin/permission', 'MdVerifiedUser', 9, '2025-03-03 13:45:26', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(4, 'posts', '/admin/posts', 'BsFillPostcardFill', 4, '2025-03-03 08:18:30', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(6, 'settings', '/admin/settings', 'IoMdSettings', 6, '2025-03-03 08:28:04', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(7, 'dashboard', '/admin/dashboard', 'MdDashboard', 1, '2025-03-03 08:30:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(8, 'products', '/admin/products', 'AiFillProduct', 2, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(9, 'category', '/admin/category', 'TbCategoryFilled', 5, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(12, 'company', '/admin/company', 'RiOrganizationChart', 9, '2025-03-11 09:35:10', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0);
+INSERT INTO `modules` (`id`, `parentId`, `name`, `slug`, `icon`, `ordering`, `createdAt`, `createdBy`, `status`, `deleted`) VALUES
+(1, 0, 'users', 'admin/users', 'FaUserGroup', 7, '2025-02-28 15:44:44', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(2, 0, 'pages', '', 'RiPagesFill', 3, '2025-02-28 17:46:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(3, 0, 'permission', 'admin/permission', 'MdVerifiedUser', 9, '2025-03-03 13:45:26', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(4, 0, 'posts', '', 'BsFillPostcardFill', 4, '2025-03-03 08:18:30', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(6, 0, 'settings', 'admin/settings', 'IoMdSettings', 6, '2025-03-03 08:28:04', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(7, 0, 'dashboard', 'admin/dashboard', 'MdDashboard', 1, '2025-03-03 08:30:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(8, 0, 'products', 'admin/products', 'AiFillProduct', 2, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(9, 0, 'category', 'admin/category', 'TbCategoryFilled', 5, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(12, 0, 'company', 'admin/company', 'RiOrganizationChart', 9, '2025-03-11 09:35:10', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(17, 4, 'All Posts', 'admin/posts', 'MdViewComfy', 1, '2025-05-13 19:09:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(20, 2, 'Create Page', 'admin/pages/create', 'AiFillPlusCircle', 2, '2025-05-28 10:46:53', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(23, 2, 'All pages', 'admin/pages', 'MdViewComfy', 1, '2025-05-13 19:09:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(24, 4, 'Create Post', 'admin/posts/create', 'AiFillPlusCircle', 2, '2025-05-28 10:46:53', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(25, 8, 'Create Product', 'create', 'AiFillPlusCircle', 2, '2025-05-28 10:46:53', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(26, 8, 'All products', '', 'MdViewComfy', 1, '2025-05-13 19:09:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(27, 0, 'test', 'test', 'MdViewComfy', 1, '2025-05-30 04:48:58', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(28, 27, 'test2', 'test2', 'MdViewComfy', 2, '2025-05-30 04:49:50', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -242,10 +320,12 @@ INSERT INTO `permissions` (`id`, `groupId`, `moduleId`, `actions`, `createdAt`) 
 (13, 1, 7, 'view,add,edit,delete', '2025-03-19 16:16:58'),
 (15, 1, 8, 'view', '2025-03-20 09:24:43'),
 (16, 1, 9, 'view,edit,delete,add', '2025-03-20 09:25:10'),
-(17, 1, 6, 'add,view,edit', '2025-03-20 09:25:36'),
+(17, 1, 6, '', '2025-03-20 09:25:36'),
 (18, 1, 4, 'view,add,edit,delete', '2025-03-20 09:25:56'),
 (19, 3, 7, 'view', '2025-04-16 17:05:21'),
-(20, 2, 7, 'view', '2025-04-16 17:05:41');
+(20, 2, 7, 'view', '2025-04-16 17:05:41'),
+(21, 1, 20, 'add,view,edit,delete', '2025-05-28 10:49:01'),
+(22, 1, 12, 'add,view,edit,delete', '2025-05-28 12:46:23');
 
 -- --------------------------------------------------------
 
@@ -313,33 +393,33 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `categoryId`, `companyId`, `name`, `identifier`, `description`, `price`, `sku`, `stockQuantity`, `imageUrl`, `weight`, `dimensions`, `createdAt`, `updatedAt`, `createdBy`, `status`, `deleted`) VALUES
-(1, 3, 1, 'Samsung Galaxy S21', 'samsung-galaxy-s21', 'The latest Samsung Galaxy smartphone with high-end features.', 799.00, 'S21-001', 50, 'https://images.unsplash.com/photo-1568378711447-f5eef04d85b5?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 1.00, '15x7x0.8 cm', '2025-03-07 10:21:07', '2025-03-13 10:07:12', 'admin', 'active', 0),
-(2, 3, 2, 'MacBook Pro 13', 'macbook-pro-13', 'Apple MacBook Pro with M1 chip and Retina display.', 1299.99, 'MBP-13-001', 30, 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 1.30, '30x21x1.5 cm', '2025-03-07 10:21:07', '2025-03-13 07:49:21', 'admin', 'active', 0),
-(3, 2, 1, 'Apple iPhone 12', 'iphone-12', 'Apple iPhone 12 with OLED display and 5G connectivity.', 799.00, 'IPH-12-001', 100, 'https://images.unsplash.com/photo-1618658848098-354b39109799?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 0.30, '15x7x0.75 cm', '2025-03-07 10:21:07', '2025-03-13 07:50:32', 'admin', 'active', 0),
-(4, 3, 3, 'Graphic T-Shirt', 'graphic-tshirt', 'Cool graphic t-shirt with modern art print.', 190.00, 'TSHIRT-001', 200, 'https://images.unsplash.com/photo-1530558215369-ba361d8734f8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 2.00, '40x30x1 cm', '2025-03-07 10:21:07', '2025-03-25 10:12:30', 'admin', 'active', 0),
-(5, 9, 3, 'Summer Dress', 'summer-dress', 'Stylish summer dress for women.', 39.99, 'DRESS-001', 150, 'https://images.unsplash.com/photo-1499561385668-5ebdb06a79bc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 0.40, '50x40x1.5 cm', '2025-03-07 10:21:07', '2025-03-13 07:54:58', 'admin', 'active', 0),
-(6, 11, 6, 'Ergonomic Office Chair', 'ergonomic-office-chair', 'Comfortable office chair with lumbar support.', 129.99, 'CHAIR-001', 50, 'https://plus.unsplash.com/premium_photo-1682432838340-e1001c1d97c8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 5.00, '80x60x60 cm', '2025-03-07 10:21:07', '2025-03-13 08:40:06', 'admin', 'active', 0),
-(7, 11, 8, 'Sofa Set', 'sofa-set', 'Comfortable 3-seater sofa set for living rooms.', 499.99, 'SOFA-001', 20, 'https://plus.unsplash.com/premium_photo-1661954429387-c1517e1a67c2?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 35.00, '200x90x85 cm', '2025-03-07 10:21:07', '2025-03-13 08:40:12', 'admin', 'active', 0),
-(8, 14, 7, 'Facial Serum', 'facial-serum', 'Hydrating serum for glowing skin.', 49.99, 'SERUM-001', 100, 'https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 0.10, '5x5x15 cm', '2025-03-07 10:21:07', '2025-03-13 08:40:10', 'admin', 'active', 0),
-(9, 14, 2, 'Lipstick', 'lipstick', 'Long-lasting matte lipstick in various shades.', 19.99, 'LIP-001', 150, 'https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 0.05, '3x3x10 cm', '2025-03-07 10:21:07', '2025-03-13 08:58:12', 'admin', 'inactive', 1);
+(1, 3, 1, 'Samsung Galaxy S21', 'samsung-galaxy-s21', 'The latest Samsung Galaxy smartphone with high-end features.', '799.00', 'S21-001', 50, 'https://images.unsplash.com/photo-1568378711447-f5eef04d85b5?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '1.00', '15x7x0.8 cm', '2025-03-07 10:21:07', '2025-03-13 10:07:12', 'admin', 'active', 0),
+(2, 3, 2, 'MacBook Pro 13', 'macbook-pro-13', 'Apple MacBook Pro with M1 chip and Retina display.', '1299.99', 'MBP-13-001', 30, 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '1.30', '30x21x1.5 cm', '2025-03-07 10:21:07', '2025-03-13 07:49:21', 'admin', 'active', 0),
+(3, 2, 1, 'Apple iPhone 12', 'iphone-12', 'Apple iPhone 12 with OLED display and 5G connectivity.', '799.00', 'IPH-12-001', 100, 'https://images.unsplash.com/photo-1618658848098-354b39109799?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '0.30', '15x7x0.75 cm', '2025-03-07 10:21:07', '2025-03-13 07:50:32', 'admin', 'active', 0),
+(4, 3, 3, 'Graphic T-Shirt', 'graphic-tshirt', 'Cool graphic t-shirt with modern art print.', '190.00', 'TSHIRT-001', 200, 'https://images.unsplash.com/photo-1530558215369-ba361d8734f8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '2.00', '40x30x1 cm', '2025-03-07 10:21:07', '2025-03-25 10:12:30', 'admin', 'active', 0),
+(5, 9, 3, 'Summer Dress', 'summer-dress', 'Stylish summer dress for women.', '39.99', 'DRESS-001', 150, 'https://images.unsplash.com/photo-1499561385668-5ebdb06a79bc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '0.40', '50x40x1.5 cm', '2025-03-07 10:21:07', '2025-03-13 07:54:58', 'admin', 'active', 0),
+(6, 11, 6, 'Ergonomic Office Chair', 'ergonomic-office-chair', 'Comfortable office chair with lumbar support.', '129.99', 'CHAIR-001', 50, 'https://plus.unsplash.com/premium_photo-1682432838340-e1001c1d97c8?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '5.00', '80x60x60 cm', '2025-03-07 10:21:07', '2025-03-13 08:40:06', 'admin', 'active', 0),
+(7, 11, 8, 'Sofa Set', 'sofa-set', 'Comfortable 3-seater sofa set for living rooms.', '499.99', 'SOFA-001', 20, 'https://plus.unsplash.com/premium_photo-1661954429387-c1517e1a67c2?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '35.00', '200x90x85 cm', '2025-03-07 10:21:07', '2025-03-13 08:40:12', 'admin', 'active', 0),
+(8, 14, 7, 'Facial Serum', 'facial-serum', 'Hydrating serum for glowing skin.', '49.99', 'SERUM-001', 100, 'https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '0.10', '5x5x15 cm', '2025-03-07 10:21:07', '2025-03-13 08:40:10', 'admin', 'active', 0),
+(9, 14, 2, 'Lipstick', 'lipstick', 'Long-lasting matte lipstick in various shades.', '19.99', 'LIP-001', 150, 'https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', '0.05', '3x3x10 cm', '2025-03-07 10:21:07', '2025-03-13 08:58:12', 'admin', 'inactive', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `RefreshToken`
+-- Table structure for table `refreshtoken`
 --
 
-CREATE TABLE `RefreshToken` (
+CREATE TABLE `refreshtoken` (
   `id` int(11) NOT NULL,
   `RefreshToken` varchar(255) NOT NULL,
-  `userId` uuid NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+  `userId` char(36) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `RefreshToken`
+-- Dumping data for table `refreshtoken`
 --
 
-INSERT INTO `RefreshToken` (`id`, `RefreshToken`, `userId`) VALUES
+INSERT INTO `refreshtoken` (`id`, `RefreshToken`, `userId`) VALUES
 (1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjgyMDE2YjQ5LTk4NmItNGI1My05MGM4LTE0YmE2YzdkZmRmNyIsImlhdCI6MTczODgyMzg2OCwiZXhwIjoxNzM5MDM5ODY4LCJpc3MiOiJsb29wYmFjazQifQ.cVJ1ia0FG8_JAvCJx5tYJ-pQ_4ryB-e22hDDwBrrlHI', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (2, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImFkNWFkNTA2LWU3NTgtNDkzZS05NzhkLTc3OTNlMWI0MzU3ZSIsImlhdCI6MTczODgyMzg5MywiZXhwIjoxNzM5MDM5ODkzLCJpc3MiOiJsb29wYmFjazQifQ.tYhRxggrxvXBh3YfuCPf6iepf98ZweVZXn1e1OKrgxw', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (3, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImUyYWE4ZDFkLWU1OGQtNDYwOS1iMDM2LWIyZmU5ZmNkM2E4ZSIsImlhdCI6MTczODgyNDI2MCwiZXhwIjoxNzM5MDQwMjYwLCJpc3MiOiJsb29wYmFjazQifQ.0_M5g3GWtZgJg1IlXRj0psSmzz4B3vRRnLd38NcH2pQ', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
@@ -482,7 +562,37 @@ INSERT INTO `RefreshToken` (`id`, `RefreshToken`, `userId`) VALUES
 (140, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjcwYjlkNTk5LWVmZGYtNGRhZi04NmE4LWYxODg5NTg1MWU4NSIsImlhdCI6MTc0NjQyMTAxNywiZXhwIjoxNzQ2NjM3MDE3LCJpc3MiOiJsb29wYmFjazQifQ.cgJCcHteDVMER6SelhD1VC-28hMQsyyrLC4wNrgLIFw', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (141, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjI0MmQxYzkyLWQ5YzEtNDlkZC05ZmEyLTVjMWJjYzY1YTg0MyIsImlhdCI6MTc0NjQ1MTA1MSwiZXhwIjoxNzQ2NjY3MDUxLCJpc3MiOiJsb29wYmFjazQifQ.i3wiPwpF8DgL7VREaN0cgV8mag95l0P0UKcVEeTz_lg', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (142, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjM4ODQ2NjU2LTM0NDYtNDAwYS04YTdiLWU5Yjg3MzZkYjI3MCIsImlhdCI6MTc0NjY4NzY5NywiZXhwIjoxNzQ2OTAzNjk3LCJpc3MiOiJsb29wYmFjazQifQ.PPHbHXif5cr073ZxxtzAFk1Nxw70m76G4GtXzVqbyhU', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
-(143, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjliZGYzNTU4LWNhYjMtNGViOS1hMDYyLTRlMWIwM2JkNjM1ZCIsImlhdCI6MTc0NzAyNDA1OCwiZXhwIjoxNzQ3MjQwMDU4LCJpc3MiOiJsb29wYmFjazQifQ.wDnjD4BSPi0QF7hKni-GtcPMlMh6MG2iDrnPvM3zJxk', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
+(143, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjliZGYzNTU4LWNhYjMtNGViOS1hMDYyLTRlMWIwM2JkNjM1ZCIsImlhdCI6MTc0NzAyNDA1OCwiZXhwIjoxNzQ3MjQwMDU4LCJpc3MiOiJsb29wYmFjazQifQ.wDnjD4BSPi0QF7hKni-GtcPMlMh6MG2iDrnPvM3zJxk', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(144, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjFiOTk1MGIwLTcxMGUtNDI1Yy1iZmViLWNiNDhiOTg0MjRiZiIsImlhdCI6MTc0NzExMjEzNCwiZXhwIjoxNzQ3MzI4MTM0LCJpc3MiOiJsb29wYmFjazQifQ.WM-pE-rKvNZEWux4WWqNTchLA6KXfWTPpYwLuZXenSA', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(145, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjVhZmYxNTA2LTZiMzctNDdkMS1iYzI5LTI2Njk3ZDcxNmJmMiIsImlhdCI6MTc0NzE0MTc5MywiZXhwIjoxNzQ3MzU3NzkzLCJpc3MiOiJsb29wYmFjazQifQ.KNEpgvtlxx2JmeO0fMbNLcyGtN2xN244FZQhvDamdDI', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(146, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6Ijc4MzhjOGM5LTIwZjQtNGNiNS1iOWFhLTBjNmViOTliYjFjMiIsImlhdCI6MTc0NzczMzg2NiwiZXhwIjoxNzQ3OTQ5ODY2LCJpc3MiOiJsb29wYmFjazQifQ.-ZhpULljAV94-5c7zv7cn-zdDIAaN_0M7jwlhoqm8ms', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(147, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImJiNDAyNmY5LTRmYTktNDYwNS1hMTQxLTUyZmUwMWRhZjg2ZSIsImlhdCI6MTc0ODIzNDM0OSwiZXhwIjoxNzQ4NDUwMzQ5LCJpc3MiOiJsb29wYmFjazQifQ.cjxiW0-H1yWEUp54vqVjPlazLSA-jHsxArRy3Y7Az-8', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(148, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImQ0ZDQ5ZjQ1LTc2ZDktNGRiNC05MGE1LTAwOWU3ODk4NmNiOCIsImlhdCI6MTc0ODQwNjU2OCwiZXhwIjoxNzQ4NjIyNTY4LCJpc3MiOiJsb29wYmFjazQifQ.94EKQd6iQatiG90hVxjpkVht2vTSXIXNnVthn3awC2k', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(149, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjdmMDcwMjdjLWIwZjgtNDk0YS04YzJjLTdlNjA3NGExNzU2YiIsImlhdCI6MTc0ODQyNzM2NiwiZXhwIjoxNzQ4NjQzMzY2LCJpc3MiOiJsb29wYmFjazQifQ.W_6eCeKKI82xajNRXY04ImNxTC5I5L3c3TQPWlyeQL4', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(150, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjI1ZjMyNWUzLTkyMDAtNDYxZi05NTI1LTZmMmQwNGRkMzUwZCIsImlhdCI6MTc0ODQzNTU5NiwiZXhwIjoxNzQ4NjUxNTk2LCJpc3MiOiJsb29wYmFjazQifQ.mInzo4Q8F5UXpioIPoIU1U4OazdmpG658bM72QlPhTc', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(151, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjQ0YWJhYWNlLTIwMmUtNDRiOS1hYWVmLWJmNzJmOGVjZmRhOCIsImlhdCI6MTc0ODQ5ODE3NSwiZXhwIjoxNzQ4NzE0MTc1LCJpc3MiOiJsb29wYmFjazQifQ.a8grNPZl-geOScjiix14fDEDdVlAqc7IUTsyekMW9IE', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(152, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNmYjQwMzE3LWYxYTUtNDViZi05YmQ2LTU0ZGU5NTkzZjEyNCIsImlhdCI6MTc0ODU3OTkyOSwiZXhwIjoxNzQ4Nzk1OTI5LCJpc3MiOiJsb29wYmFjazQifQ.x-qzTnih0MbqlTrJxeSZvUDtMceXXDR_SgyvgDQ2eDo', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(153, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjQ0ZTY5YjBmLWVhMzYtNGU3My1iNTM1LTZjMTg2OTdiNTBmMCIsImlhdCI6MTc0ODYwNzEyNywiZXhwIjoxNzQ4ODIzMTI3LCJpc3MiOiJsb29wYmFjazQifQ.Vc2biwpxIn9L1tUTjrioZP7QJmCIWcfVcgkjcqaciVg', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(154, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImY5MjFjZmNmLTQyNDctNDNlYi04YzQxLWM5MjgxODk0MDcwYiIsImlhdCI6MTc0ODYwNzQ4NSwiZXhwIjoxNzQ4ODIzNDg1LCJpc3MiOiJsb29wYmFjazQifQ.bhbJwbc16qbPDAocm76t5JUpWMox2fvxFKcfo2VPlCU', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(155, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjRmMDkxYmQ3LTI0ODQtNDRjMS1hMzk4LWQ5Yzk4NDgxZmFiZCIsImlhdCI6MTc1MDkxMzc1OSwiZXhwIjoxNzUxMTI5NzU5LCJpc3MiOiJsb29wYmFjazQifQ.wQ_LuhGIchVYegegVVRX4aYKZQaPO6U8WOlmkqYWpfU', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(156, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjZjYjk3ODk2LTZkZDktNDZhMC05MmIyLTMxYjM5NjY2OWIxYSIsImlhdCI6MTc1MTAwMzM0OSwiZXhwIjoxNzUxMjE5MzQ5LCJpc3MiOiJsb29wYmFjazQifQ._tQuCL7gbiS8yWXxOEQoLV4nRHsZJ0aVrNHAFTkrOLY', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(157, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjU0ZjdlNzQwLTAwOWUtNGE4YS1hNTg0LTg4YWMwZjU4MjI5MiIsImlhdCI6MTc1MTI5ODAxMiwiZXhwIjoxNzUxNTE0MDEyLCJpc3MiOiJsb29wYmFjazQifQ.xVTDaEpU_IMBHUXfOm7TdMaaO0bA9A3hOQe0iLJ0sjw', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(11) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `courseId` int(11) NOT NULL,
+  `review` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` varchar(200) NOT NULL,
+  `status` enum('pending','published','deleted') DEFAULT 'pending',
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -532,10 +642,45 @@ CREATE TABLE `shipping` (
 --
 
 INSERT INTO `shipping` (`id`, `shippingAddress`, `shippingCost`, `trackingNumber`, `carrier`, `createdAt`, `updatedAt`, `createdBy`, `status`, `deleted`) VALUES
-(1, '123 Main St, Springfield, IL', 15.00, 'TRK12345', 'FedEx', '2025-03-07 10:20:20', '2025-03-10 05:25:34', 'admin', 'active', 0),
-(2, '456 Oak Rd, Denver, CO', 20.00, 'TRK67890', 'UPS', '2025-03-07 10:20:20', '2025-03-10 05:25:37', 'admin', 'active', 0),
-(3, '789 Pine St, Miami, FL', 25.00, 'TRK11223', 'USPS', '2025-03-07 10:20:20', '2025-03-10 05:25:39', 'admin', 'active', 0),
-(4, '101 Maple Rd, New York, NY', 30.00, 'TRK33445', 'DHL', '2025-03-07 10:20:20', '2025-03-10 05:25:42', 'admin', 'active', 0);
+(1, '123 Main St, Springfield, IL', '15.00', 'TRK12345', 'FedEx', '2025-03-07 10:20:20', '2025-03-10 05:25:34', 'admin', 'active', 0),
+(2, '456 Oak Rd, Denver, CO', '20.00', 'TRK67890', 'UPS', '2025-03-07 10:20:20', '2025-03-10 05:25:37', 'admin', 'active', 0),
+(3, '789 Pine St, Miami, FL', '25.00', 'TRK11223', 'USPS', '2025-03-07 10:20:20', '2025-03-10 05:25:39', 'admin', 'active', 0),
+(4, '101 Maple Rd, New York, NY', '30.00', 'TRK33445', 'DHL', '2025-03-07 10:20:20', '2025-03-10 05:25:42', 'admin', 'active', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stdenrolled`
+--
+
+CREATE TABLE `stdenrolled` (
+  `id` char(36) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `courseId` int(11) NOT NULL,
+  `createdBy` varchar(255) NOT NULL,
+  `createdAt` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `id` bigint(20) NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` longtext DEFAULT NULL,
+  `TotalCourse` decimal(10,0) NOT NULL,
+  `featured` varchar(255) NOT NULL,
+  `imageUrl` varchar(255) NOT NULL,
+  `status` enum('pending','published','draft','deleted') NOT NULL DEFAULT 'pending',
+  `createdAt` datetime DEFAULT current_timestamp(),
+  `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdBy` varchar(255) NOT NULL,
+  `deleted` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -589,7 +734,7 @@ INSERT INTO `tags` (`id`, `name`, `identifier`, `postId`, `status`, `createdAt`,
 
 CREATE TABLE `tokens` (
   `id` varchar(255) NOT NULL,
-  `userId` uuid NOT NULL,
+  `userId` char(36) NOT NULL,
   `type` varchar(255) NOT NULL,
   `expiresAt` datetime DEFAULT NULL,
   `createdAt` datetime DEFAULT current_timestamp()
@@ -609,7 +754,7 @@ INSERT INTO `tokens` (`id`, `userId`, `type`, `expiresAt`, `createdAt`) VALUES
 --
 
 CREATE TABLE `transaction` (
-  `id` uuid NOT NULL,
+  `id` char(36) NOT NULL,
   `clientId` varchar(255) NOT NULL,
   `campaignId` varchar(255) NOT NULL,
   `amount` varchar(50) NOT NULL,
@@ -625,7 +770,7 @@ CREATE TABLE `transaction` (
 --
 
 CREATE TABLE `users` (
-  `id` uuid NOT NULL,
+  `id` char(36) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(512) NOT NULL,
   `role` varchar(50) DEFAULT NULL,
@@ -634,12 +779,12 @@ CREATE TABLE `users` (
   `lastName` varchar(255) DEFAULT NULL,
   `expiredPass` tinyint(1) DEFAULT NULL,
   `isVerified` tinyint(1) DEFAULT NULL,
-  `createdBy` uuid DEFAULT NULL,
+  `createdBy` char(36) DEFAULT NULL,
   `createdAt` datetime DEFAULT NULL,
   `updatedAt` datetime DEFAULT NULL,
   `status` varchar(10) NOT NULL DEFAULT 'active',
   `deleted` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -647,11 +792,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `password`, `role`, `groupId`, `firstName`, `lastName`, `expiredPass`, `isVerified`, `createdBy`, `createdAt`, `updatedAt`, `status`, `deleted`) VALUES
 ('7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'admin@gmail.com', '$2b$10$jTFSTc5QPyC/Mr.3TbW9MeuQrfgfrkZPr5DTYCtNUKi2OVqU.m7Ou', 'admin', 1, 'Admin', 'Role', NULL, NULL, NULL, '2025-02-06 11:44:36', '2025-02-28 08:58:01', 'active', 0),
-('f69545ba-8749-4bdf-b2d4-15407c392074', 'devs@gmail.com', '$2b$10$ZmyhNW/G.2lyqS.QnOv1ZupY9ARZliAQ57EeZFpurqzxgS62ryytG', 'vendor', 1, 'Darren', 'Dunner', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 12:25:07', '2025-02-18 12:25:07', 'active', 0),
-('942ae23d-4b93-4f75-9a59-186931999242', 'khan@gmail.com', '$2b$10$KR86s61CHY220Taj4UrVuOzVD.H6lvmFOaVKp3dB65l0hmsygmcKa', 'admin', 1, 'Nur', 'Khan', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 10:22:41', '2025-02-18 10:22:41', 'active', 0),
+('83a0f09c-2dfe-4b4c-8918-381b9f15f0cd', 'nur@gmail.com', '$2b$10$jTFSTc5QPyC/Mr.3TbW9MeuQrfgfrkZPr5DTYCtNUKi2OVqU.m7Ou', 'admin', 1, 'Nur islam', 'Islam', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 10:19:04', '2025-02-20 06:24:16', 'inactive', 0),
 ('86c43859-4402-41a9-b774-2ab98230a6c8', 'dev@abc.com', '$2b$10$.bm2G6d5R8OUFbJoez79WeRhS2mK/jBus4cYc1u8TtqvCZtvchhVi', 'admin', 1, 'Darren', 'Dunner', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 10:08:46', '2025-02-18 10:08:46', 'active', 0),
+('942ae23d-4b93-4f75-9a59-186931999242', 'khan@gmail.com', '$2b$10$KR86s61CHY220Taj4UrVuOzVD.H6lvmFOaVKp3dB65l0hmsygmcKa', 'admin', 1, 'Nur', 'Khan', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 10:22:41', '2025-02-18 10:22:41', 'active', 0),
 ('97904874-493a-4ce6-a552-35bb4a13463c', 'dave@gmail.com', '$2b$10$d51aZxZs0MJ/n7srzYx4O.xvVGKDOfrkaMMl5S7LcciHcNoDmssdW', 'account', 2, 'Dave', 'Polykoff', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 10:31:32', '2025-02-19 11:42:07', 'active', 0),
-('83a0f09c-2dfe-4b4c-8918-381b9f15f0cd', 'nur@gmail.com', '$2b$10$jTFSTc5QPyC/Mr.3TbW9MeuQrfgfrkZPr5DTYCtNUKi2OVqU.m7Ou', 'admin', 1, 'Nur islam', 'Islam', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 10:19:04', '2025-02-20 06:24:16', 'inactive', 0);
+('f69545ba-8749-4bdf-b2d4-15407c392074', 'devs@gmail.com', '$2b$10$ZmyhNW/G.2lyqS.QnOv1ZupY9ARZliAQ57EeZFpurqzxgS62ryytG', 'vendor', 1, 'Darren', 'Dunner', 0, 1, '7c24c913-4af7-4922-87ac-0ac33c6f0d91', '2025-02-18 12:25:07', '2025-02-18 12:25:07', 'active', 0);
 
 --
 -- Indexes for dumped tables
@@ -678,18 +823,38 @@ ALTER TABLE `company`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `identifier` (`identifier`);
+
+--
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `instructors`
+--
+ALTER TABLE `instructors`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `identifier` (`identifier`);
+
+--
+-- Indexes for table `lessons`
+--
+ALTER TABLE `lessons`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_name_postid` (`name`,`courseId`);
+
+--
 -- Indexes for table `modules`
 --
 ALTER TABLE `modules`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD UNIQUE KEY `slug` (`slug`);
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `pages`
@@ -723,9 +888,9 @@ ALTER TABLE `products`
   ADD KEY `companyId` (`companyId`);
 
 --
--- Indexes for table `RefreshToken`
+-- Indexes for table `refreshtoken`
 --
-ALTER TABLE `RefreshToken`
+ALTER TABLE `refreshtoken`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -741,6 +906,19 @@ ALTER TABLE `settings`
 ALTER TABLE `shipping`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `trackingNumber` (`trackingNumber`);
+
+--
+-- Indexes for table `stdenrolled`
+--
+ALTER TABLE `stdenrolled`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `identifier` (`identifier`);
 
 --
 -- Indexes for table `tags`
@@ -784,16 +962,34 @@ ALTER TABLE `company`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `instructors`
+--
+ALTER TABLE `instructors`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lessons`
+--
+ALTER TABLE `lessons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -805,7 +1001,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -820,10 +1016,10 @@ ALTER TABLE `products`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `RefreshToken`
+-- AUTO_INCREMENT for table `refreshtoken`
 --
-ALTER TABLE `RefreshToken`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+ALTER TABLE `refreshtoken`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -836,6 +1032,12 @@ ALTER TABLE `settings`
 --
 ALTER TABLE `shipping`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tags`

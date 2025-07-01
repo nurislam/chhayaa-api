@@ -9,3 +9,4 @@ export * from './post.repository';
 export * from './token.repository';
 export * from './user.repository';
 export * from './tag.repository';
+export * from './courses.repository';
