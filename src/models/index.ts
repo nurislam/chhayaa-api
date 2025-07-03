@@ -1,5 +1,7 @@
 export * from './access-token.model';
 export * from './activity-log.model';
+export * from './category.model';
+export * from './courses.model';
 export * from './group.model';
 export * from './modules.model';
 export * from './option.model';
@@ -9,4 +11,3 @@ export * from './post.model';
 export * from './tag.model';
 export * from './token.model';
 export * from './user.model';
-export * from './courses.model';
