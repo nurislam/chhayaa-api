@@ -23,6 +23,12 @@ export class Courses extends Entity {
   identifier: string;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  content: string;
+
+  @property({
     type: 'number',
     required: false,
   })
@@ -45,6 +51,12 @@ export class Courses extends Entity {
     required: false,
   })
   imageUrl?: string;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  instructorId: number;
 
   @property({
     type: 'string',
@@ -75,6 +87,36 @@ export class Courses extends Entity {
     default: () => new Date(),
   })
   updatedAt: string;
+
+  @property({
+    type: 'number',
+    required: false,
+  })
+  price: number;
+
+  @property({
+    type: 'string',
+    required: false,
+  })
+  duration: string;
+
+  @property({
+    type: 'string',
+    required: false,
+  })
+  language: string;
+
+  @property({
+    type: 'string',
+    required: false,
+  })
+  certificate: string;
+
+  @property({
+    type: 'number',
+    required: false,
+  })
+  rating: number;
 
   @belongsTo(() => Category)
   categoryId: number;
