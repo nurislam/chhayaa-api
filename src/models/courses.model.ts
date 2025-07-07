@@ -1,5 +1,6 @@
 import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Category} from './category.model';
+import {Instructor} from './instructors.model';
 
 @model({name: 'courses'})
 export class Courses extends Entity {
@@ -52,10 +53,7 @@ export class Courses extends Entity {
   })
   imageUrl?: string;
 
-  @property({
-    type: 'number',
-    required: true,
-  })
+  @belongsTo(() => Instructor)
   instructorId: number;
 
   @property({
