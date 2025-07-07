@@ -3,6 +3,7 @@ export * from './activity-log.model';
 export * from './category.model';
 export * from './courses.model';
 export * from './group.model';
+export * from './instructors.model';
 export * from './modules.model';
 export * from './option.model';
 export * from './pages.model';

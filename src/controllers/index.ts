@@ -1,6 +1,7 @@
 export * from './activity-log.controller';
 export * from './courses.controller';
 export * from './group.controller';
+export * from './instructor.controller';
 export * from './modules.controller';
 export * from './option.controller';
 export * from './pages.controller';
