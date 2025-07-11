@@ -1,6 +1,14 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {
+  belongsTo,
+  Entity,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
 import {Category} from './category.model';
-import {Instructor} from './instructors.model';
+import {Lessons} from './lessons.model';
+import {Instructor} from './instructor.model';
+import {Stdenrolled} from './stdenrolled.model';
 
 @model({name: 'courses'})
 export class Courses extends Entity {
@@ -52,15 +60,6 @@ export class Courses extends Entity {
     required: false,
   })
   imageUrl?: string;
-
-  @belongsTo(() => Instructor)
-  instructorId: number;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  instructorId: number;
 
   @property({
     type: 'string',
@@ -124,6 +123,15 @@ export class Courses extends Entity {
 
   @belongsTo(() => Category)
   categoryId: number;
+
+  @hasMany(() => Lessons)
+  lessons: Lessons[];
+
+  @belongsTo(() => Instructor)
+  instructorId: number;
+
+  @hasMany(() => Stdenrolled)
+  stdenrolleds: Stdenrolled[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

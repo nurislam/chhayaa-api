@@ -1,7 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Stdenrolled} from './stdenrolled.model';
 
-@model({name: 'instructors'})
-export class Instructor extends Entity {
+@model({name: 'students'})
+export class Student extends Entity {
   @property({
     type: 'number',
     id: true,
@@ -17,8 +18,9 @@ export class Instructor extends Entity {
 
   @property({
     type: 'string',
+    required: true,
   })
-  title?: string;
+  title: string;
 
   @property({
     type: 'string',
@@ -26,25 +28,14 @@ export class Instructor extends Entity {
   content?: string;
 
   @property({
-    type: 'number',
-    jsonSchema: {
-      minimum: 0,
-      maximum: 5,
-    },
+    type: 'string',
   })
-  rating?: number;
+  TotalCourse?: string;
 
   @property({
-    type: 'number',
-    default: 0,
+    type: 'string',
   })
-  totalCourse?: number;
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  featured?: boolean;
+  featured?: string;
 
   @property({
     type: 'string',
@@ -79,13 +70,21 @@ export class Instructor extends Entity {
   })
   deleted?: boolean;
 
-  constructor(data?: Partial<Instructor>) {
+  @hasMany(() => Stdenrolled)
+  stdenrolleds: Stdenrolled[];
+  // Define well-known properties here
+
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any;
+
+  constructor(data?: Partial<Student>) {
     super(data);
   }
 }
 
-export interface InstructorsRelations {
+export interface StudentRelations {
   // describe navigational properties here
 }
 
-export type InstructorsWithRelations = Instructor & InstructorsRelations;
+export type StudentWithRelations = Student & StudentRelations;

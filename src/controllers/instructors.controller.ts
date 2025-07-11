@@ -7,23 +7,23 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
+  post,
+  param,
   get,
   getModelSchemaRef,
-  param,
   patch,
-  post,
   put,
+  del,
   requestBody,
   response,
 } from '@loopback/rest';
-import {Instructor} from '../models/instructors.model';
-import {InstructorRepository} from '../repositories/instructor.repository';
+import {Instructor} from '../models';
+import {InstructorRepository} from '../repositories';
 
-export class InstructorController {
+export class InstructorsController {
   constructor(
     @repository(InstructorRepository)
-    public instructorRepository: InstructorRepository,
+    public instructorRepository : InstructorRepository,
   ) {}
 
   @post('/instructors')
@@ -106,8 +106,7 @@ export class InstructorController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Instructor, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Instructor>,
+    @param.filter(Instructor, {exclude: 'where'}) filter?: FilterExcludingWhere<Instructor>
   ): Promise<Instructor> {
     return this.instructorRepository.findById(id, filter);
   }
