@@ -1,14 +1,7 @@
-import {
-  belongsTo,
-  Entity,
-  hasMany,
-  model,
-  property,
-} from '@loopback/repository';
+import {belongsTo, Entity, model, property, hasMany} from '@loopback/repository';
 import {Category} from './category.model';
-import {Lessons} from './lessons.model';
 import {Instructor} from './instructor.model';
-import {Stdenrolled} from './stdenrolled.model';
+import {Lessons} from './lessons.model';
 
 @model({name: 'courses'})
 export class Courses extends Entity {
@@ -124,14 +117,11 @@ export class Courses extends Entity {
   @belongsTo(() => Category)
   categoryId: number;
 
-  @hasMany(() => Lessons)
-  lessons: Lessons[];
-
   @belongsTo(() => Instructor)
   instructorId: number;
 
-  @hasMany(() => Stdenrolled)
-  stdenrolleds: Stdenrolled[];
+  @hasMany(() => Lessons, {keyTo: 'courseId'})
+  lessons: Lessons[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

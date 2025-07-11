@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2025 at 09:11 PM
+-- Generation Time: Jul 11, 2025 at 05:42 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -51,7 +51,7 @@ CREATE TABLE `categories` (
   `categoryName` varchar(255) NOT NULL,
   `categoryDescription` text DEFAULT NULL,
   `imageUrl` varchar(255) DEFAULT NULL,
-  `categoryType` enum('post','product') NOT NULL DEFAULT 'post',
+  `categoryType` enum('post','product','course') NOT NULL DEFAULT 'post',
   `createdAt` timestamp NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `createdBy` varchar(255) DEFAULT NULL,
@@ -90,10 +90,11 @@ INSERT INTO `categories` (`id`, `identifier`, `parentId`, `categoryName`, `categ
 (26, 'finance', NULL, 'Finance', 'Insights on personal finance, investment, and financial planning.', 'https://plus.unsplash.com/premium_photo-1681487769650-a0c3fbaed85a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8RmluYW5jZXxlbnwwfHwwfHx8MA%3D%3D', 'post', '2025-03-17 03:22:24', '2025-04-08 08:53:34', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
 (27, 'food-recipes', NULL, 'Food & Recipes', 'Delicious recipes, cooking tips, and food culture discussions.', 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Rm9vZHxlbnwwfHwwfHx8MA%3D%3D', 'product', '2025-03-17 03:22:24', '2025-04-16 11:28:31', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
 (28, 'marketing', NULL, 'Marketing', 'Strategies and trends in digital marketing and advertising.', 'https://images.unsplash.com/flagged/photo-1556514767-5c270b96a005?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTR8fG1hcmtldGluZ3xlbnwwfHwwfHx8MA%3D%3D', 'post', '2025-03-17 03:22:24', '2025-04-08 08:53:02', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
-(29, 'business', 23, 'Business', 'Advice and stories on entrepreneurship, startups, and business growth.', 'https://plus.unsplash.com/premium_photo-1661775522763-451d7783b453?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGJ1c2luZXNzfGVufDB8fDB8fHww', 'post', '2025-03-17 03:22:24', '2025-04-08 08:52:56', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
+(29, 'business', 23, 'Business', 'Advice and stories on entrepreneurship, startups, and business growth.', 'https://plus.unsplash.com/premium_photo-1661775522763-451d7783b453?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGJ1c2luZXNzfGVufDB8fDB8fHww', 'course', '2025-03-17 03:22:24', '2025-07-03 16:08:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
 (30, 'education', 25, 'Education', 'Resources and insights into learning, teaching, and academic trends.', 'https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWR1Y2F0aW9ufGVufDB8fDB8fHww', 'post', '2025-03-17 03:22:24', '2025-04-08 08:52:30', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
-(37, 'test-category', 16, 'Test category', 'test', NULL, 'post', '2025-03-26 02:43:07', '2025-04-08 08:52:47', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
-(40, 'dev-test', 0, 'Dev test nur', 'Description test', NULL, 'post', '2025-04-24 23:27:01', '2025-04-25 02:48:26', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'inactive', 0);
+(37, 'art-design', 16, 'Art & Design', 'Art & Design', NULL, 'course', '2025-03-26 02:43:07', '2025-07-03 16:09:20', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0),
+(40, 'academics', 0, 'Academics', 'Academics', NULL, 'course', '2025-04-24 23:27:01', '2025-07-03 16:08:06', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'inactive', 0),
+(41, 'development', NULL, 'Development', NULL, NULL, 'course', '2025-07-03 15:53:17', '2025-07-03 15:59:14', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 'active', 0);
 
 -- --------------------------------------------------------
 
@@ -155,6 +156,13 @@ CREATE TABLE `courses` (
   `deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `categoryId`, `instructorId`, `identifier`, `title`, `price`, `content`, `duration`, `language`, `certificate`, `rating`, `totalLesson`, `TotalStudents`, `featured`, `imageUrl`, `status`, `createdAt`, `updatedAt`, `createdBy`, `deleted`) VALUES
+(1, 41, 1, 'major-in-economics', 'Major in Economics', '3000', '<h2>Course Description</h2>\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inc idid unt ut labore et dolore magna aliqua enim ad minim veniam, quis nostrud exerec tation ullamco laboris nis aliquip commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur enim ipsam.\r\n\r\nExcepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam.', '10 Weeks', 'English', 'yes', '3.4', 8, 35, '', '', 'published', '2025-07-03 21:51:33', '2025-07-11 11:33:26', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -189,7 +197,8 @@ INSERT INTO `groups` (`id`, `name`, `createdAt`, `createdBy`, `status`, `deleted
 CREATE TABLE `instructors` (
   `id` bigint(20) NOT NULL,
   `identifier` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `designation` varchar(255) NOT NULL,
   `content` longtext DEFAULT NULL,
   `rating` varchar(100) NOT NULL,
   `TotalCourse` smallint(10) NOT NULL,
@@ -201,6 +210,14 @@ CREATE TABLE `instructors` (
   `createdBy` varchar(255) NOT NULL,
   `deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `instructors`
+--
+
+INSERT INTO `instructors` (`id`, `identifier`, `name`, `designation`, `content`, `rating`, `TotalCourse`, `featured`, `imageUrl`, `status`, `createdAt`, `updatedAt`, `createdBy`, `deleted`) VALUES
+(1, 'penelope-cruz', 'Penelope Cruz', 'Founder & CEO', 'Consectetur adipisicing elit, sed do eiusmod tempor incididunt labore et dolore magna aliqua enim minim veniam quis nostrud exercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat. duis aute irure dolor in reprehenderit in voluptate.', '', 1, '', '', 'published', '2025-07-03 22:12:16', '2025-07-03 22:16:42', '', 0),
+(2, 'susan-white', 'Susan White', 'Managing Director', 'Consectetur adipisicing elit, sed do eiusmod tempor incididunt labore et dolore magna aliqua enim minim veniam quis nostrud exercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat. duis aute irure dolor in reprehenderit in voluptate.', '', 1, '', '', 'published', '2025-07-03 22:17:11', '2025-07-03 22:19:58', '', 0);
 
 -- --------------------------------------------------------
 
@@ -219,6 +236,14 @@ CREATE TABLE `lessons` (
   `createdBy` varchar(255) NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lessons`
+--
+
+INSERT INTO `lessons` (`id`, `name`, `details`, `identifier`, `courseId`, `status`, `createdAt`, `createdBy`, `deleted`) VALUES
+(3, 'Introduction', 'Introduction', 'introduction', 1, 'active', '2025-07-11 04:06:05', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1),
+(4, 'Course Overview', 'Course Overview', 'course-overview', 1, 'active', '2025-07-11 04:06:52', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1);
 
 -- --------------------------------------------------------
 
@@ -245,13 +270,13 @@ CREATE TABLE `modules` (
 
 INSERT INTO `modules` (`id`, `parentId`, `name`, `slug`, `icon`, `ordering`, `createdAt`, `createdBy`, `status`, `deleted`) VALUES
 (1, 0, 'users', 'admin/users', 'FaUserGroup', 7, '2025-02-28 15:44:44', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(2, 0, 'pages', '', 'RiPagesFill', 3, '2025-02-28 17:46:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(2, 0, 'pages', '', 'RiPagesFill', 5, '2025-02-28 17:46:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (3, 0, 'permission', 'admin/permission', 'MdVerifiedUser', 9, '2025-03-03 13:45:26', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(4, 0, 'posts', '', 'BsFillPostcardFill', 4, '2025-03-03 08:18:30', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(4, 0, 'posts', '', 'BsFillPostcardFill', 5, '2025-03-03 08:18:30', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (6, 0, 'settings', 'admin/settings', 'IoMdSettings', 6, '2025-03-03 08:28:04', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (7, 0, 'dashboard', 'admin/dashboard', 'MdDashboard', 1, '2025-03-03 08:30:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (8, 0, 'products', 'admin/products', 'AiFillProduct', 2, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(9, 0, 'category', 'admin/category', 'TbCategoryFilled', 5, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(9, 0, 'category', 'admin/category', 'TbCategoryFilled', 4, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (12, 0, 'company', 'admin/company', 'RiOrganizationChart', 9, '2025-03-11 09:35:10', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (17, 4, 'All Posts', 'admin/posts', 'MdViewComfy', 1, '2025-05-13 19:09:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (20, 2, 'Create Page', 'admin/pages/create', 'AiFillPlusCircle', 2, '2025-05-28 10:46:53', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
@@ -259,8 +284,13 @@ INSERT INTO `modules` (`id`, `parentId`, `name`, `slug`, `icon`, `ordering`, `cr
 (24, 4, 'Create Post', 'admin/posts/create', 'AiFillPlusCircle', 2, '2025-05-28 10:46:53', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (25, 8, 'Create Product', 'create', 'AiFillPlusCircle', 2, '2025-05-28 10:46:53', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (26, 8, 'All products', '', 'MdViewComfy', 1, '2025-05-13 19:09:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(27, 0, 'test', 'test', 'MdViewComfy', 1, '2025-05-30 04:48:58', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(28, 27, 'test2', 'test2', 'MdViewComfy', 2, '2025-05-30 04:49:50', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0);
+(29, 0, 'courses', '', 'MdViewComfy', 2, '2025-07-07 23:51:16', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(30, 29, 'create', 'admin/courses/create', 'AiFillPlusCircle', 1, '2025-07-07 23:53:22', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(31, 29, 'All Courses', 'admin/courses', 'MdViewComfy', 0, '2025-07-07 23:57:50', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(32, 0, 'students', '', 'MdViewComfy', 3, '2025-07-11 15:22:22', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(33, 32, 'All Students', 'admin/students', 'MdViewComfy', 1, '2025-07-11 15:24:46', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(37, 32, 'Add Student', 'admin/students/create', 'AiFillPlusCircle', 2, '2025-07-11 15:27:12', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(38, 29, 'Lessons', 'admin/courses/lessons', 'MdViewComfy', 3, '2025-07-11 15:35:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -324,7 +354,11 @@ INSERT INTO `permissions` (`id`, `groupId`, `moduleId`, `actions`, `createdAt`) 
 (19, 3, 7, 'view', '2025-04-16 17:05:21'),
 (20, 2, 7, 'view', '2025-04-16 17:05:41'),
 (21, 1, 20, 'add,view,edit,delete', '2025-05-28 10:49:01'),
-(22, 1, 12, 'add,view,edit,delete', '2025-05-28 12:46:23');
+(23, 1, 29, 'add,view,edit,delete', '2025-07-08 05:53:53'),
+(24, 1, 32, 'add,view,edit,delete', '2025-07-11 21:23:00'),
+(25, 1, 33, 'add,view,edit,delete', '2025-07-11 21:28:18'),
+(26, 1, 37, 'add,edit,delete,view', '2025-07-11 21:28:44'),
+(27, 1, 38, 'view,add,edit,delete', '2025-07-11 21:35:26');
 
 -- --------------------------------------------------------
 
@@ -576,7 +610,14 @@ INSERT INTO `refreshtoken` (`id`, `RefreshToken`, `userId`) VALUES
 (155, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjRmMDkxYmQ3LTI0ODQtNDRjMS1hMzk4LWQ5Yzk4NDgxZmFiZCIsImlhdCI6MTc1MDkxMzc1OSwiZXhwIjoxNzUxMTI5NzU5LCJpc3MiOiJsb29wYmFjazQifQ.wQ_LuhGIchVYegegVVRX4aYKZQaPO6U8WOlmkqYWpfU', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (156, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjZjYjk3ODk2LTZkZDktNDZhMC05MmIyLTMxYjM5NjY2OWIxYSIsImlhdCI6MTc1MTAwMzM0OSwiZXhwIjoxNzUxMjE5MzQ5LCJpc3MiOiJsb29wYmFjazQifQ._tQuCL7gbiS8yWXxOEQoLV4nRHsZJ0aVrNHAFTkrOLY', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (157, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjU0ZjdlNzQwLTAwOWUtNGE4YS1hNTg0LTg4YWMwZjU4MjI5MiIsImlhdCI6MTc1MTI5ODAxMiwiZXhwIjoxNzUxNTE0MDEyLCJpc3MiOiJsb29wYmFjazQifQ.xVTDaEpU_IMBHUXfOm7TdMaaO0bA9A3hOQe0iLJ0sjw', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
-(158, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImViMzZlNGQ5LTg0MTEtNDZhNS1iNzMzLTQ3ZmQzMmQyOTczNCIsImlhdCI6MTc1MTM5NjQ4OSwiZXhwIjoxNzUxNjEyNDg5LCJpc3MiOiJsb29wYmFjazQifQ.X9oeppqZb0WWK2xGY6GziNKUwajA3buKT3wU-fek1o0', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
+(158, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImViMzZlNGQ5LTg0MTEtNDZhNS1iNzMzLTQ3ZmQzMmQyOTczNCIsImlhdCI6MTc1MTM5NjQ4OSwiZXhwIjoxNzUxNjEyNDg5LCJpc3MiOiJsb29wYmFjazQifQ.X9oeppqZb0WWK2xGY6GziNKUwajA3buKT3wU-fek1o0', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(159, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImQzMDhkNzUxLWM0Y2EtNDdiMy05OWRhLTRmMGEzZjcxM2EwZSIsImlhdCI6MTc1MTU2NDExNiwiZXhwIjoxNzUxNzgwMTE2LCJpc3MiOiJsb29wYmFjazQifQ.yWGXB68Ux48bDr88-bW5-dwVFR80Kpxc9jWCML8hfJc', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(160, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNlNjVmZDUwLWZjNDQtNGY0My04ODUyLWY0OTI1NTdlNTJiYyIsImlhdCI6MTc1MTc5NjM3MiwiZXhwIjoxNzUyMDEyMzcyLCJpc3MiOiJsb29wYmFjazQifQ.pmZ9zOhUkXTcLMpb7dZii8S73fKKWM1idFkMUfrYfn0', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(161, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjM5Y2U5OWVlLWQ2ZTUtNDY3MC1hODYxLTRkZWZhZGZlOGI0NCIsImlhdCI6MTc1MTkzMTUxMCwiZXhwIjoxNzUyMTQ3NTEwLCJpc3MiOiJsb29wYmFjazQifQ.W6AHGEfXezSY34tDAESvKD_4HiYT4pIcP_H8BvEADrk', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(162, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNlMmUxZTc4LTI2NmYtNDlhNC1iMTRmLWIzNjBkY2RkMjQ1NCIsImlhdCI6MTc1MjIwNTgwNCwiZXhwIjoxNzUyNDIxODA0LCJpc3MiOiJsb29wYmFjazQifQ.efMPRmhWg-87rHXCjkGYBFOhkLTCDrXolJBVsYwK8ck', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(163, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImE5YjI4M2QzLTYyNDEtNGYzNi1iODNjLWRmYWNlMjA0OThhMyIsImlhdCI6MTc1MjIyODA5NiwiZXhwIjoxNzUyNDQ0MDk2LCJpc3MiOiJsb29wYmFjazQifQ.WEUjwNn4JMmvuBvyqVqE6fXBr6uJOFiX0lLyL1bG-FM', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(164, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjdiODZmMGI0LTNmYTMtNDRmZi05NDRlLTY2Njc4MTI4ODQxZiIsImlhdCI6MTc1MjI0NzgwNywiZXhwIjoxNzUyNDYzODA3LCJpc3MiOiJsb29wYmFjazQifQ.AOClGV4-ISOUdp-W-uF_Fs2Sr6KrPifMY31vOsAvqoE', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(165, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImE1Nzc2ZDUxLTVjNzItNDExZS05Mjc0LWJhYjIzNWViMTNmMCIsImlhdCI6MTc1MjI0ODEzMiwiZXhwIjoxNzUyNDY0MTMyLCJpc3MiOiJsb29wYmFjazQifQ.0W6yVe6zP4Zs4AX-lBA6f_TDuzWFgypWmmzECN80J2I', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
 
 -- --------------------------------------------------------
 
@@ -681,6 +722,14 @@ CREATE TABLE `students` (
   `createdBy` varchar(255) NOT NULL,
   `deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `identifier`, `title`, `content`, `TotalCourse`, `featured`, `imageUrl`, `status`, `createdAt`, `updatedAt`, `createdBy`, `deleted`) VALUES
+(2, 'akbar-alli', 'Akbar alli', 'test', '0', '', '', 'published', '2025-07-11 15:32:19', '2025-07-11 21:32:19', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 0),
+(3, 'kayser-mahmud', 'Kayser Mahmud', 'test', '0', '', '', 'published', '2025-07-11 15:32:39', '2025-07-11 21:32:39', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 0);
 
 -- --------------------------------------------------------
 
@@ -953,7 +1002,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -965,7 +1014,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -977,19 +1026,19 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `instructors`
 --
 ALTER TABLE `instructors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lessons`
 --
 ALTER TABLE `lessons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -1001,7 +1050,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -1019,7 +1068,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `refreshtoken`
 --
 ALTER TABLE `refreshtoken`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1037,7 +1086,7 @@ ALTER TABLE `shipping`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tags`

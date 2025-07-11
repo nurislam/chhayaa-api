@@ -26,9 +26,9 @@ export class Lessons extends Entity {
   identifier: string;
 
   @property({
-    type: 'boolean',
+    type: 'string',
   })
-  status?: boolean;
+  status?: string;
 
   @property({
     type: 'date',

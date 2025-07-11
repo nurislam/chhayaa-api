@@ -7,13 +7,13 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -23,7 +23,7 @@ import {CoursesRepository} from '../repositories';
 export class CoursesController {
   constructor(
     @repository(CoursesRepository)
-    public coursesRepository : CoursesRepository,
+    public coursesRepository: CoursesRepository,
   ) {}
 
   @post('/courses')
@@ -52,9 +52,7 @@ export class CoursesController {
     description: 'Courses model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Courses) where?: Where<Courses>,
-  ): Promise<Count> {
+  async count(@param.where(Courses) where?: Where<Courses>): Promise<Count> {
     return this.coursesRepository.count(where);
   }
 
@@ -106,7 +104,8 @@ export class CoursesController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Courses, {exclude: 'where'}) filter?: FilterExcludingWhere<Courses>
+    @param.filter(Courses, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Courses>,
   ): Promise<Courses> {
     return this.coursesRepository.findById(id, filter);
   }

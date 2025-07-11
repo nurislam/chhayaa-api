@@ -1,5 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {Stdenrolled} from './stdenrolled.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model({name: 'students'})
 export class Student extends Entity {
@@ -70,8 +69,6 @@ export class Student extends Entity {
   })
   deleted?: boolean;
 
-  @hasMany(() => Stdenrolled)
-  stdenrolleds: Stdenrolled[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
