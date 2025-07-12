@@ -46,10 +46,10 @@ export class Instructor extends Entity {
   totalCourse?: number;
 
   @property({
-    type: 'boolean',
+    type: 'string',
     default: false,
   })
-  featured?: boolean;
+  featured?: string;
 
   @property({
     type: 'string',

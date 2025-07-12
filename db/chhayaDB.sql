@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2025 at 05:42 PM
+-- Generation Time: Jul 12, 2025 at 09:27 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -201,7 +201,7 @@ CREATE TABLE `instructors` (
   `designation` varchar(255) NOT NULL,
   `content` longtext DEFAULT NULL,
   `rating` varchar(100) NOT NULL,
-  `TotalCourse` smallint(10) NOT NULL,
+  `totalCourse` smallint(10) NOT NULL,
   `featured` varchar(255) NOT NULL,
   `imageUrl` varchar(255) NOT NULL,
   `status` enum('pending','published','draft','deleted') NOT NULL DEFAULT 'pending',
@@ -215,9 +215,10 @@ CREATE TABLE `instructors` (
 -- Dumping data for table `instructors`
 --
 
-INSERT INTO `instructors` (`id`, `identifier`, `name`, `designation`, `content`, `rating`, `TotalCourse`, `featured`, `imageUrl`, `status`, `createdAt`, `updatedAt`, `createdBy`, `deleted`) VALUES
+INSERT INTO `instructors` (`id`, `identifier`, `name`, `designation`, `content`, `rating`, `totalCourse`, `featured`, `imageUrl`, `status`, `createdAt`, `updatedAt`, `createdBy`, `deleted`) VALUES
 (1, 'penelope-cruz', 'Penelope Cruz', 'Founder & CEO', 'Consectetur adipisicing elit, sed do eiusmod tempor incididunt labore et dolore magna aliqua enim minim veniam quis nostrud exercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat. duis aute irure dolor in reprehenderit in voluptate.', '', 1, '', '', 'published', '2025-07-03 22:12:16', '2025-07-03 22:16:42', '', 0),
-(2, 'susan-white', 'Susan White', 'Managing Director', 'Consectetur adipisicing elit, sed do eiusmod tempor incididunt labore et dolore magna aliqua enim minim veniam quis nostrud exercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat. duis aute irure dolor in reprehenderit in voluptate.', '', 1, '', '', 'published', '2025-07-03 22:17:11', '2025-07-03 22:19:58', '', 0);
+(2, 'susan-white', 'Susan White', 'Managing Director', 'Consectetur adipisicing elit, sed do eiusmod tempor incididunt labore et dolore magna aliqua enim minim veniam quis nostrud exercitation ulla mco laboris nisi ut aliquip ex ea commodo consequat. duis aute irure dolor in reprehenderit in voluptate.', '', 1, '', '', 'published', '2025-07-03 22:17:11', '2025-07-03 22:19:58', '', 0),
+(3, 'jane-seymour', 'Jane Seymour', 'Founder & CEO', 'test', '', 3, '', '', 'published', '2025-07-12 07:10:55', '2025-07-12 13:10:55', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 0);
 
 -- --------------------------------------------------------
 
@@ -277,7 +278,6 @@ INSERT INTO `modules` (`id`, `parentId`, `name`, `slug`, `icon`, `ordering`, `cr
 (7, 0, 'dashboard', 'admin/dashboard', 'MdDashboard', 1, '2025-03-03 08:30:01', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (8, 0, 'products', 'admin/products', 'AiFillProduct', 2, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (9, 0, 'category', 'admin/category', 'TbCategoryFilled', 4, '2025-03-11 09:33:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(12, 0, 'company', 'admin/company', 'RiOrganizationChart', 9, '2025-03-11 09:35:10', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (17, 4, 'All Posts', 'admin/posts', 'MdViewComfy', 1, '2025-05-13 19:09:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (20, 2, 'Create Page', 'admin/pages/create', 'AiFillPlusCircle', 2, '2025-05-28 10:46:53', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (23, 2, 'All pages', 'admin/pages', 'MdViewComfy', 1, '2025-05-13 19:09:11', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
@@ -290,7 +290,10 @@ INSERT INTO `modules` (`id`, `parentId`, `name`, `slug`, `icon`, `ordering`, `cr
 (32, 0, 'students', '', 'MdViewComfy', 3, '2025-07-11 15:22:22', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (33, 32, 'All Students', 'admin/students', 'MdViewComfy', 1, '2025-07-11 15:24:46', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
 (37, 32, 'Add Student', 'admin/students/create', 'AiFillPlusCircle', 2, '2025-07-11 15:27:12', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
-(38, 29, 'Lessons', 'admin/courses/lessons', 'MdViewComfy', 3, '2025-07-11 15:35:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0);
+(38, 29, 'Lessons', 'admin/courses/lessons', 'MdViewComfy', 3, '2025-07-11 15:35:00', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(39, 0, 'Instructors', '', 'MdViewComfy', 3, '2025-07-12 07:20:13', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(40, 39, 'All Instructors', 'admin/instructors', 'MdViewComfy', 1, '2025-07-12 07:24:29', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0),
+(41, 39, 'Add Instructors', 'admin/instructors/create', 'AiFillPlusCircle', 2, '2025-07-12 07:25:38', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -358,7 +361,10 @@ INSERT INTO `permissions` (`id`, `groupId`, `moduleId`, `actions`, `createdAt`) 
 (24, 1, 32, 'add,view,edit,delete', '2025-07-11 21:23:00'),
 (25, 1, 33, 'add,view,edit,delete', '2025-07-11 21:28:18'),
 (26, 1, 37, 'add,edit,delete,view', '2025-07-11 21:28:44'),
-(27, 1, 38, 'view,add,edit,delete', '2025-07-11 21:35:26');
+(27, 1, 38, 'view,add,edit,delete', '2025-07-11 21:35:26'),
+(28, 1, 39, 'add,view,edit,delete', '2025-07-12 13:21:33'),
+(29, 1, 40, 'add,edit,view,delete', '2025-07-12 13:25:58'),
+(30, 1, 41, 'add,view,edit,delete', '2025-07-12 13:26:18');
 
 -- --------------------------------------------------------
 
@@ -617,7 +623,11 @@ INSERT INTO `refreshtoken` (`id`, `RefreshToken`, `userId`) VALUES
 (162, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNlMmUxZTc4LTI2NmYtNDlhNC1iMTRmLWIzNjBkY2RkMjQ1NCIsImlhdCI6MTc1MjIwNTgwNCwiZXhwIjoxNzUyNDIxODA0LCJpc3MiOiJsb29wYmFjazQifQ.efMPRmhWg-87rHXCjkGYBFOhkLTCDrXolJBVsYwK8ck', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (163, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImE5YjI4M2QzLTYyNDEtNGYzNi1iODNjLWRmYWNlMjA0OThhMyIsImlhdCI6MTc1MjIyODA5NiwiZXhwIjoxNzUyNDQ0MDk2LCJpc3MiOiJsb29wYmFjazQifQ.WEUjwNn4JMmvuBvyqVqE6fXBr6uJOFiX0lLyL1bG-FM', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
 (164, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjdiODZmMGI0LTNmYTMtNDRmZi05NDRlLTY2Njc4MTI4ODQxZiIsImlhdCI6MTc1MjI0NzgwNywiZXhwIjoxNzUyNDYzODA3LCJpc3MiOiJsb29wYmFjazQifQ.AOClGV4-ISOUdp-W-uF_Fs2Sr6KrPifMY31vOsAvqoE', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
-(165, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImE1Nzc2ZDUxLTVjNzItNDExZS05Mjc0LWJhYjIzNWViMTNmMCIsImlhdCI6MTc1MjI0ODEzMiwiZXhwIjoxNzUyNDY0MTMyLCJpc3MiOiJsb29wYmFjazQifQ.0W6yVe6zP4Zs4AX-lBA6f_TDuzWFgypWmmzECN80J2I', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
+(165, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImE1Nzc2ZDUxLTVjNzItNDExZS05Mjc0LWJhYjIzNWViMTNmMCIsImlhdCI6MTc1MjI0ODEzMiwiZXhwIjoxNzUyNDY0MTMyLCJpc3MiOiJsb29wYmFjazQifQ.0W6yVe6zP4Zs4AX-lBA6f_TDuzWFgypWmmzECN80J2I', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(166, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImYwYmFmZWE5LThiMWUtNDQyOC04OGQ0LTgyNWM0OWI2NGJlYiIsImlhdCI6MTc1MjI5ODM3MCwiZXhwIjoxNzUyNTE0MzcwLCJpc3MiOiJsb29wYmFjazQifQ.O0d8rttrhB_GBLdjHhImirU44hwoP7yejoVJdq2gp7g', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(167, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImRkMjNmNmVjLTNiNjEtNDE5ZC04NDI1LTk4MTQwOGE5NDA1MyIsImlhdCI6MTc1MjMwMDY4MSwiZXhwIjoxNzUyNTE2NjgxLCJpc3MiOiJsb29wYmFjazQifQ.bbjqwExW85dybgJ42jlzZRURjPLZgv-YDxZCd9nWILM', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(168, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImFjNWE2ODU3LTViYzUtNDc2NC04NmNlLTBlYjMyMzU0NTkwMCIsImlhdCI6MTc1MjMwNDk2MCwiZXhwIjoxNzUyNTIwOTYwLCJpc3MiOiJsb29wYmFjazQifQ.ZZ5KM_zkAT99-iEa8gdieXTOEAQVNQR3rDGHCssZufA', '7c24c913-4af7-4922-87ac-0ac33c6f0d91'),
+(169, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjFhMjQwZjNiLWFjYzItNDM4MS1hYzM4LWI0ZjYyMmJmMTRlMCIsImlhdCI6MTc1MjMwNTE4NSwiZXhwIjoxNzUyNTIxMTg1LCJpc3MiOiJsb29wYmFjazQifQ.8dk7JU_j__Il9YV3wuPwca4zUP9VWmTtjhRiCNtL_Yw', '7c24c913-4af7-4922-87ac-0ac33c6f0d91');
 
 -- --------------------------------------------------------
 
@@ -713,7 +723,7 @@ CREATE TABLE `students` (
   `identifier` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` longtext DEFAULT NULL,
-  `TotalCourse` decimal(10,0) NOT NULL,
+  `totalCourse` decimal(10,0) NOT NULL,
   `featured` varchar(255) NOT NULL,
   `imageUrl` varchar(255) NOT NULL,
   `status` enum('pending','published','draft','deleted') NOT NULL DEFAULT 'pending',
@@ -727,7 +737,7 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `identifier`, `title`, `content`, `TotalCourse`, `featured`, `imageUrl`, `status`, `createdAt`, `updatedAt`, `createdBy`, `deleted`) VALUES
+INSERT INTO `students` (`id`, `identifier`, `title`, `content`, `totalCourse`, `featured`, `imageUrl`, `status`, `createdAt`, `updatedAt`, `createdBy`, `deleted`) VALUES
 (2, 'akbar-alli', 'Akbar alli', 'test', '0', '', '', 'published', '2025-07-11 15:32:19', '2025-07-11 21:32:19', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 0),
 (3, 'kayser-mahmud', 'Kayser Mahmud', 'test', '0', '', '', 'published', '2025-07-11 15:32:39', '2025-07-11 21:32:39', '7c24c913-4af7-4922-87ac-0ac33c6f0d91', 0);
 
@@ -1026,7 +1036,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `instructors`
 --
 ALTER TABLE `instructors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `lessons`
@@ -1038,7 +1048,7 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -1050,7 +1060,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -1068,7 +1078,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `refreshtoken`
 --
 ALTER TABLE `refreshtoken`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT for table `settings`

@@ -29,7 +29,7 @@ export class Student extends Entity {
   @property({
     type: 'string',
   })
-  TotalCourse?: string;
+  totalCourse?: string;
 
   @property({
     type: 'string',
