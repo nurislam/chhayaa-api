@@ -41,6 +41,11 @@ export class Category extends Entity {
   @property({
     type: 'string',
   })
+  cat_icon?: string;
+
+  @property({
+    type: 'string',
+  })
   imageUrl?: string;
 
   @property({
