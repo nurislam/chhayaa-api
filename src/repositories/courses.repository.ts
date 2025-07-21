@@ -39,6 +39,7 @@ export class CoursesRepository extends DefaultCrudRepository<
     super(Courses, dataSource);
     this.lessons = this.createHasManyRepositoryFactoryFor('lessons', lessonsRepositoryGetter,);
     this.registerInclusionResolver('lessons', this.lessons.inclusionResolver);
+
     this.instructor = this.createBelongsToAccessorFor(
       'instructor',
       instructorRepositoryGetter,

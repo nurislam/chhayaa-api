@@ -13,3 +13,4 @@ export * from './student-stdenrolled.controller';
 export * from './students.controller';
 export * from './tag.controller';
 export * from './user.controller';
+export * from './courses-lessons.controller';
