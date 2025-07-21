@@ -7,13 +7,13 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -23,8 +23,8 @@ import {StudentRepository} from '../repositories';
 export class StudentsController {
   constructor(
     @repository(StudentRepository)
-    public studentRepository : StudentRepository,
-  ) {}
+    public studentRepository: StudentRepository,
+  ) { }
 
   @post('/students')
   @response(200, {

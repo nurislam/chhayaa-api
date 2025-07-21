@@ -7,13 +7,14 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  HttpErrors,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -23,8 +24,8 @@ import {InstructorRepository} from '../repositories';
 export class InstructorsController {
   constructor(
     @repository(InstructorRepository)
-    public instructorRepository : InstructorRepository,
-  ) {}
+    public instructorRepository: InstructorRepository,
+  ) { }
 
   @post('/instructors')
   @response(200, {
@@ -93,6 +94,33 @@ export class InstructorsController {
     @param.where(Instructor) where?: Where<Instructor>,
   ): Promise<Count> {
     return this.instructorRepository.updateAll(instructor, where);
+  }
+
+  @get('/instructors/details/{identifier}')
+  @response(200, {
+    description: 'Course model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Instructor, {includeRelations: true}),
+      },
+    },
+  })
+  async findByIdentifier(
+    @param.path.string('identifier') identifier: string,
+    @param.filter(Instructor, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Instructor>,
+  ): Promise<Instructor> {
+    const courseData = await this.instructorRepository.findOne({
+      where: {identifier, deleted: false},
+    });
+
+    if (!courseData) {
+      throw new HttpErrors.NotFound(
+        `Page with identifier "${identifier}" not found.`,
+      );
+    }
+
+    return courseData;
   }
 
   @get('/instructors/{id}')

@@ -17,6 +17,12 @@ export class Student extends Entity {
 
   @property({
     type: 'string',
+    required: false,
+  })
+  passoword: string;
+
+  @property({
+    type: 'string',
     required: true,
   })
   title: string;
