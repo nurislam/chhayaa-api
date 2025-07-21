@@ -1,4 +1,4 @@
-import {belongsTo, Entity, model, property, hasMany} from '@loopback/repository';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {Category} from './category.model';
 import {Instructor} from './instructor.model';
 import {Lessons} from './lessons.model';
@@ -47,6 +47,12 @@ export class Courses extends Entity {
     required: false,
   })
   featured: string;
+
+  @property({
+    type: 'string',
+    required: false,
+  })
+  level: string;
 
   @property({
     type: 'string',

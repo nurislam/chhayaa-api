@@ -10,6 +10,7 @@ import {
   del,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
@@ -24,7 +25,7 @@ export class CoursesController {
   constructor(
     @repository(CoursesRepository)
     public coursesRepository: CoursesRepository,
-  ) {}
+  ) { }
 
   @post('/courses')
   @response(200, {
@@ -91,6 +92,33 @@ export class CoursesController {
     @param.where(Courses) where?: Where<Courses>,
   ): Promise<Count> {
     return this.coursesRepository.updateAll(courses, where);
+  }
+
+  @get('/courses/details/{identifier}')
+  @response(200, {
+    description: 'Course model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Courses, {includeRelations: true}),
+      },
+    },
+  })
+  async findByIdentifier(
+    @param.path.string('identifier') identifier: string,
+    @param.filter(Courses, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Courses>,
+  ): Promise<Courses> {
+    const courseData = await this.coursesRepository.findOne({
+      where: {identifier, deleted: false},
+    });
+
+    if (!courseData) {
+      throw new HttpErrors.NotFound(
+        `Page with identifier "${identifier}" not found.`,
+      );
+    }
+
+    return courseData;
   }
 
   @get('/courses/{id}')
