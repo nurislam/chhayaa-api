@@ -19,7 +19,7 @@ export class Student extends Entity {
     type: 'string',
     required: false,
   })
-  passoword: string;
+  password: string;
 
   @property({
     type: 'string',
