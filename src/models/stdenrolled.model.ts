@@ -19,6 +19,17 @@ export class Stdenrolled extends Entity {
   })
   studentId?: number;
 
+  @property({
+    type: 'string',
+  })
+  createdBy?: string;
+
+  @property({
+    type: 'date',
+    defaultFn: 'now',
+  })
+  createdAt: string;
+
   constructor(data?: Partial<Stdenrolled>) {
     super(data);
   }
